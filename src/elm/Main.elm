@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Init exposing (init)
+import Time exposing (every)
 import Types.Flags exposing (Flags)
 import Types.Model exposing (Model)
 import Types.Msg exposing (Msg(..))
@@ -19,7 +20,7 @@ main =
         { init = init
         , onUrlChange = ChangedUrl
         , onUrlRequest = UrlRequested
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = \_ -> every 1000 UpdateTime
         , update = update
         , view = view
         }

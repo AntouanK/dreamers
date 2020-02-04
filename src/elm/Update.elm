@@ -1,7 +1,9 @@
 module Update exposing (update)
 
+import Time exposing (millisToPosix, posixToMillis)
 import Types.Model exposing (Model)
 import Types.Msg exposing (Msg(..))
+import Types.Route exposing (Route(..))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -19,6 +21,24 @@ update msg model =
         GoToRoute route ->
             let
                 newModel =
-                    { model | route = route }
+                    case route of
+                        ChatSoon ->
+                            { model
+                                | route = route
+                                , maybeTimeSubmitted =
+                                    ((model.now |> posixToMillis) - 100)
+                                        |> millisToPosix
+                                        |> Just
+                            }
+
+                        _ ->
+                            { model | route = route }
+            in
+            ( newModel, Cmd.none )
+
+        UpdateTime posix ->
+            let
+                newModel =
+                    { model | now = posix }
             in
             ( newModel, Cmd.none )

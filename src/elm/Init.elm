@@ -1,6 +1,7 @@
 module Init exposing (init)
 
 import Browser.Navigation exposing (Key)
+import Time exposing (millisToPosix)
 import Types.Flags exposing (Flags)
 import Types.Model exposing (Model)
 import Types.Msg exposing (Msg(..))
@@ -10,11 +11,13 @@ import Url exposing (Url)
 
 
 init : Flags -> Url -> Key -> ( Model, Cmd Msg )
-init _ _ _ =
+init flags _ _ =
     let
         model =
             { questions = initialQuestions
             , route = Start
+            , now = flags.now |> millisToPosix
+            , maybeTimeSubmitted = Nothing
             }
     in
     ( model, Cmd.none )

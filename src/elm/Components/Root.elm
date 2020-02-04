@@ -15,12 +15,14 @@ import Css
         , column
         , cover
         , cursor
+        , display
         , displayFlex
         , flex
         , flexDirection
         , fontFamilies
         , fontSize
         , hex
+        , inlineBlock
         , int
         , justifyContent
         , margin2
@@ -47,6 +49,7 @@ import Html
 import Html.Styled exposing (Html, input, node, text, toUnstyled)
 import Html.Styled.Attributes exposing (css, disabled, id, placeholder, type_, value)
 import Html.Styled.Events exposing (onClick)
+import Time exposing (posixToMillis)
 import Types.Model exposing (Model)
 import Types.Msg exposing (Msg(..))
 import Types.Question exposing (Question, QuestionId)
@@ -56,16 +59,19 @@ import Types.Route exposing (Route(..))
 render : Model -> Html.Html Msg
 render model =
     let
-        { route, questions } =
+        { route, questions, now, maybeTimeSubmitted } =
             model
 
         bgId =
             case route of
+                Start ->
+                    0
+
                 QuestionSection id ->
                     id
 
-                _ ->
-                    0
+                ChatSoon ->
+                    8
 
         mainContent =
             case route of
@@ -88,7 +94,48 @@ render model =
                     renderQuestion questions questionId
 
                 ChatSoon ->
-                    [ text "chat" ]
+                    case maybeTimeSubmitted of
+                        Just timeSubmitted ->
+                            let
+                                diff =
+                                    secondsForDays 3
+                                        - ((posixToMillis now
+                                                - posixToMillis timeSubmitted
+                                           )
+                                            // 1000
+                                          )
+
+                                seconds =
+                                    diff |> modBy 60
+
+                                minutes =
+                                    diff // 60 |> modBy 60
+
+                                hours =
+                                    diff // 60 // 60
+                            in
+                            [ text <|
+                                "Hang in there. We'll contact you definitely before "
+                                    ++ "this timer runs out"
+                            , node "time-section"
+                                []
+                                [ node "time-unit"
+                                    [ css cssTimeUnit ]
+                                    [ text <| String.fromInt hours ]
+                                , text "hours"
+                                , node "time-unit"
+                                    [ css cssTimeUnit ]
+                                    [ text <| String.fromInt minutes ]
+                                , text "minutes"
+                                , node "time-unit"
+                                    [ css cssTimeUnit ]
+                                    [ text <| String.fromInt seconds ]
+                                , text "seconds"
+                                ]
+                            ]
+
+                        Nothing ->
+                            [ text "whooops. no submission time found" ]
     in
     toUnstyled <|
         node "root"
@@ -97,6 +144,11 @@ render model =
                 [ css cssCenterContent ]
                 mainContent
             ]
+
+
+secondsForDays : Int -> Int
+secondsForDays days =
+    days * 24 * 60 * 60
 
 
 renderQuestion : List Question -> QuestionId -> List (Html Msg)
@@ -195,6 +247,15 @@ cssNext =
     [ fontSize (px 40)
     , margin2 (px 20) zero
     , cursor pointer
+    ]
+
+
+cssTimeUnit : List Style
+cssTimeUnit =
+    [ fontSize (px 40)
+    , textAlign center
+    , display inlineBlock
+    , width (px 65)
     ]
 
 

@@ -1,4 +1,4 @@
 var app = Elm.Main.init({
-  flags: { someField: "foo", someOtherField: 123 },
+  flags: { now: Date.now() },
   node: document.querySelector("elm")
 });
