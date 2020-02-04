@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" sizes="16x16 32x32 48x48 64x64 128x128 256x256" href="/favicon.ico">
+        <title>title controlled from Elm app</title>
+        <link rel="stylesheet" href="stylesheet/pure.base.css">
+        <link href="https://fonts.googleapis.com/css?family=Cambay&display=swap" rel="stylesheet">
+        <style>
+            input::-webkit-input-placeholder { color: #d36044; }
+            input::-moz-placeholder { color: #d36044; }
+            input:-ms-input-placeholder { color: #d36044; }
+            input:-moz-placeholder { color: #d36044; }
+
+            @keyframes fadein {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+            }
+
+            /* Firefox < 16 */
+            @-moz-keyframes fadein {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+            }
+
+            /* Safari, Chrome and Opera > 12.1 */
+            @-webkit-keyframes fadein {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+            }
+
+            /* Internet Explorer */
+            @-ms-keyframes fadein {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+            }
+
+        </style>
+    </head>
+    <body>
+        <elm></elm>
+        <script type="text/javascript" src="script/elm-main.js"></script>
+        <script type="text/javascript" src="script/initialise.js"></script>
+        <link rel="preload" href="/images/bg0.jpg" as="image">
+        <link rel="preload" href="/images/bg1.jpg" as="image">
+        <link rel="preload" href="/images/bg2.jpg" as="image">
+        <link rel="preload" href="/images/bg3.jpg" as="image">
+        <link rel="preload" href="/images/bg4.jpg" as="image">
+    </body>
+</html>
