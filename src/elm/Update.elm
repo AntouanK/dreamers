@@ -16,9 +16,9 @@ update msg model =
         UrlRequested _ ->
             ( model, Cmd.none )
 
-        GoToQuestion question ->
+        GoToRoute route ->
             let
                 newModel =
-                    { model | maybeQuestionIdToShow = Just question.id }
+                    { model | route = route }
             in
             ( newModel, Cmd.none )

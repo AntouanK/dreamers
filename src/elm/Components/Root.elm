@@ -28,7 +28,6 @@ import Css
         , minWidth
         , none
         , outline
-        , padding2
         , pct
         , pointer
         , property
@@ -46,35 +45,38 @@ import Css
         )
 import Html
 import Html.Styled exposing (Html, input, node, text, toUnstyled)
-import Html.Styled.Attributes exposing (css, id, placeholder, type_, value)
+import Html.Styled.Attributes exposing (css, disabled, id, placeholder, type_, value)
 import Html.Styled.Events exposing (onClick)
 import Types.Model exposing (Model)
 import Types.Msg exposing (Msg(..))
 import Types.Question exposing (Question, QuestionId)
+import Types.Route exposing (Route(..))
 
 
 render : Model -> Html.Html Msg
 render model =
     let
-        { maybeQuestionIdToShow, questions } =
+        { route, questions } =
             model
 
         bgId =
-            case maybeQuestionIdToShow of
-                Just id ->
+            case route of
+                QuestionSection id ->
                     id
 
-                Nothing ->
+                _ ->
                     0
 
         mainContent =
-            case maybeQuestionIdToShow of
-                Nothing ->
+            case route of
+                Start ->
                     case List.filter (.id >> (==) 1) questions of
                         [ firstQuestion ] ->
                             [ node "start-link"
                                 [ css cssStartLink
-                                , onClick <| GoToQuestion firstQuestion
+                                , onClick <|
+                                    GoToRoute <|
+                                        QuestionSection firstQuestion.id
                                 ]
                                 [ text "Build your dream" ]
                             ]
@@ -82,8 +84,11 @@ render model =
                         _ ->
                             []
 
-                Just questionId ->
+                QuestionSection questionId ->
                     renderQuestion questions questionId
+
+                ChatSoon ->
+                    [ text "chat" ]
     in
     toUnstyled <|
         node "root"
@@ -109,22 +114,26 @@ renderQuestion questions questionId =
     in
     case maybeThisQuestion of
         Just question ->
-            case maybeNextQuestion of
-                Just nextQuestion ->
-                    [ inputEle question
-                    , node "next"
-                        [ css cssNext
-                        , onClick <| GoToQuestion nextQuestion
-                        ]
-                        [ text "next" ]
-                    ]
+            let
+                extraAttributes =
+                    case maybeNextQuestion of
+                        Just nextQuestion ->
+                            [ onClick <| GoToRoute <| QuestionSection nextQuestion.id ]
 
-                Nothing ->
-                    [ inputEle question
-                    , node "next"
-                        [ css cssNext ]
-                        [ text "done" ]
+                        Nothing ->
+                            [ onClick <| GoToRoute ChatSoon ]
+
+                attributes =
+                    [ css cssNext
+                    , disabled <| not <| .withInput <| question
                     ]
+                        ++ extraAttributes
+            in
+            [ inputEle question
+            , node "next"
+                attributes
+                [ text question.label ]
+            ]
 
         _ ->
             [ text "nothing" ]
@@ -151,7 +160,6 @@ cssRoot bgId =
     [ minHeight (vh 100)
     , minWidth (vw 100)
     , fontFamilies [ "Cambay", "sans-serif" ]
-    , property "transition" "background-image 1s ease-in-out"
     , backgroundImage <| url <| "/images/" ++ String.fromInt bgId ++ ".jpg"
     , backgroundPosition center
     , backgroundSize cover
@@ -192,13 +200,14 @@ cssNext =
 
 cssCenterContent : List Style
 cssCenterContent =
-    [ flex (int 0)
+    [ flex (int 1)
     , flexDirection column
     , alignItems center
     , property "animation" "fadein 1s"
     , displayFlex
     , color <| hex "d36044"
-    , padding2 (px 240) (px 30)
+
+    --  , padding2 (px 240) (px 30)
     , justifyContent center
     , property "background" "linear-gradient(0deg, rgba(0,212,255,0) 0%, rgba(214, 214, 220, 0.88) 35%, rgba(214, 214, 220, 0.88) 65%, rgba(0,212,255,0) 100%)"
     ]
