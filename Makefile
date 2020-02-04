@@ -78,7 +78,7 @@ $(DIST)/stylesheet:
 
 #------------------------------------------------------------------ elm compilation
 compile-elm: $(shell find $(SRC)/elm)
-	elm make $(SRC)/elm/Main.elm --output=$(DIST)/script/elm-main.js
+	$(ELM_BINARIES)/elm make $(SRC)/elm/Main.elm --output=$(DIST)/script/elm-main.js
 
 #------------------------------------------------------------------ serve
 serve: elm-binary

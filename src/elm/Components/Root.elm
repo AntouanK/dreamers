@@ -198,7 +198,7 @@ cssCenterContent =
     , property "animation" "fadein 1s"
     , displayFlex
     , color <| hex "d36044"
-    , padding2 (px 240) zero
+    , padding2 (px 240) (px 30)
     , justifyContent center
     , property "background" "linear-gradient(0deg, rgba(0,212,255,0) 0%, rgba(214, 214, 220, 0.88) 35%, rgba(214, 214, 220, 0.88) 65%, rgba(0,212,255,0) 100%)"
     ]
