@@ -169,7 +169,7 @@ cssInputEle =
     , fontSize (px 50)
     , textAlign center
     , outline none
-    , borderBottom3 (px 1) solid (hex "FEFEFE")
+    , borderBottom3 (px 2) solid (hex "FEFEFE")
     , width (pct 100)
     ]
 
