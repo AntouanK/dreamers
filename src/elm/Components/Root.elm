@@ -21,7 +21,10 @@ import Css
         , flexDirection
         , fontFamilies
         , fontSize
+        , fontWeight
+        , height
         , hex
+        , hidden
         , inlineBlock
         , int
         , justifyContent
@@ -29,17 +32,17 @@ import Css
         , minHeight
         , minWidth
         , none
-        , opacity
         , outline
+        , overflow
         , padding
+        , padding2
+        , pct
         , pointer
         , property
         , px
         , solid
         , textAlign
-        , textDecoration
         , transparent
-        , underline
         , url
         , vh
         , vw
@@ -199,6 +202,7 @@ renderQuestion questions questionId =
                     node "next" attributes [ text question.label ]
             in
             [ inputEle question
+            , node "input-ele-fake" [ css cssInputEleFake ] [ text question.text ]
             , nextNode
             ]
 
@@ -227,7 +231,8 @@ cssRoot : Int -> List Style
 cssRoot bgId =
     [ minHeight (vh 100)
     , minWidth (vw 100)
-    , fontFamilies [ "Cambay", "sans-serif" ]
+    , fontFamilies [ "Raleway", "sans-serif" ]
+    , fontWeight <| int 300
     , backgroundImage <| url <| "/images/" ++ String.fromInt bgId ++ ".jpg"
     , backgroundPosition center
     , backgroundSize cover
@@ -247,14 +252,22 @@ cssInputEle =
     , textAlign center
     , outline none
     , borderBottom3 (px 2) solid (hex "343434")
-    , width (px 770)
+    , width (pct 100)
+    ]
+
+
+cssInputEleFake : List Style
+cssInputEleFake =
+    [ fontSize (px 50)
+    , padding2 zero (px 10)
+    , height zero
+    , overflow hidden
     ]
 
 
 cssStartLink : List Style
 cssStartLink =
     [ fontSize (px 70)
-    , textDecoration underline
     , cursor pointer
     ]
 
@@ -262,7 +275,7 @@ cssStartLink =
 cssNext : Bool -> List Style
 cssNext show =
     [ fontSize (px 40)
-    , margin2 (px 20) zero
+    , margin2 (px 4) zero
     , cursor pointer
     , property "opacity"
         (if show then
