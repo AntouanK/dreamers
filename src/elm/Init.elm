@@ -36,13 +36,13 @@ initialQuestions =
       , label = "next"
       }
     , { id = 3
-      , text = "How much revenue are you looking to make?"
+      , text = "How much revenue are you looking for?"
       , withInput = True
       , label = "next"
       }
     , { id = 4
-      , text = "complete the aptitude test"
-      , withInput = False
+      , text = "email for the aptitude test"
+      , withInput = True
       , label = "go"
       }
     ]

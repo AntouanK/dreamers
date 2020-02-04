@@ -30,7 +30,7 @@ import Css
         , minWidth
         , none
         , outline
-        , pct
+        , padding
         , pointer
         , property
         , px
@@ -114,9 +114,12 @@ render model =
                                 hours =
                                     diff // 60 // 60
                             in
-                            [ text <|
-                                "Hang in there. We'll contact you definitely before "
-                                    ++ "this timer runs out"
+                            [ node "timer-text"
+                                [ css [ fontSize (px 60) ] ]
+                                [ text <|
+                                    "Hang in there. We'll contact you before "
+                                        ++ "this timer runs out"
+                                ]
                             , node "time-section"
                                 []
                                 [ node "time-unit"
@@ -218,6 +221,7 @@ cssRoot bgId =
     , displayFlex
     , flexDirection column
     , justifyContent center
+    , alignItems center
     , property "animation" "fadein 1s"
     ]
 
@@ -229,8 +233,8 @@ cssInputEle =
     , fontSize (px 50)
     , textAlign center
     , outline none
-    , borderBottom3 (px 2) solid (hex "FEFEFE")
-    , width (pct 100)
+    , borderBottom3 (px 2) solid (hex "343434")
+    , width (px 770)
     ]
 
 
@@ -261,14 +265,16 @@ cssTimeUnit =
 
 cssCenterContent : List Style
 cssCenterContent =
-    [ flex (int 1)
+    [ flex (int 0)
     , flexDirection column
     , alignItems center
     , property "animation" "fadein 1s"
     , displayFlex
     , color <| hex "d36044"
-
-    --  , padding2 (px 240) (px 30)
+    , padding (px 40)
     , justifyContent center
-    , property "background" "linear-gradient(0deg, rgba(0,212,255,0) 0%, rgba(214, 214, 220, 0.88) 35%, rgba(214, 214, 220, 0.88) 65%, rgba(0,212,255,0) 100%)"
+    , backgroundColor <| hex "FDFDFD"
+    , property "box-shadow" "5px 5px 1px #d36044"
+
+    --, property "background" "linear-gradient(0deg, rgba(0,212,255,0) 0%, rgba(214, 214, 220, 0.88) 35%, rgba(214, 214, 220, 0.88) 65%, rgba(0,212,255,0) 100%)"
     ]
