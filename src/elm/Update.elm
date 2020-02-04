@@ -42,3 +42,21 @@ update msg model =
                     { model | now = posix }
             in
             ( newModel, Cmd.none )
+
+        SetAnswer questionId answer ->
+            let
+                newQuestions =
+                    model.questions
+                        |> List.map
+                            (\question ->
+                                if question.id == questionId then
+                                    { question | answer = answer }
+
+                                else
+                                    question
+                            )
+
+                newModel =
+                    { model | questions = newQuestions }
+            in
+            ( newModel, Cmd.none )

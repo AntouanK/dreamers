@@ -29,6 +29,7 @@ import Css
         , minHeight
         , minWidth
         , none
+        , opacity
         , outline
         , padding
         , pointer
@@ -48,7 +49,7 @@ import Css
 import Html
 import Html.Styled exposing (Html, input, node, text, toUnstyled)
 import Html.Styled.Attributes exposing (css, disabled, id, placeholder, type_, value)
-import Html.Styled.Events exposing (onClick)
+import Html.Styled.Events exposing (onClick, onInput)
 import Time exposing (posixToMillis)
 import Types.Model exposing (Model)
 import Types.Msg exposing (Msg(..))
@@ -115,9 +116,9 @@ render model =
                                     diff // 60 // 60
                             in
                             [ node "timer-text"
-                                [ css [ fontSize (px 60) ] ]
+                                [ css [ fontSize (px 50), textAlign center ] ]
                                 [ text <|
-                                    "Hang in there. We'll contact you before "
+                                    "Nice! We'll contact you before "
                                         ++ "this timer runs out"
                                 ]
                             , node "time-section"
@@ -171,23 +172,34 @@ renderQuestion questions questionId =
         Just question ->
             let
                 extraAttributes =
-                    case maybeNextQuestion of
-                        Just nextQuestion ->
-                            [ onClick <| GoToRoute <| QuestionSection nextQuestion.id ]
+                    if question.answer == "" then
+                        []
 
-                        Nothing ->
-                            [ onClick <| GoToRoute ChatSoon ]
+                    else
+                        case maybeNextQuestion of
+                            Just nextQuestion ->
+                                [ onClick <|
+                                    GoToRoute <|
+                                        QuestionSection nextQuestion.id
+                                ]
+
+                            Nothing ->
+                                [ onClick <| GoToRoute ChatSoon ]
+
+                showNext =
+                    not <| question.answer == ""
 
                 attributes =
-                    [ css cssNext
+                    [ css <| cssNext showNext
                     , disabled <| not <| .withInput <| question
                     ]
                         ++ extraAttributes
+
+                nextNode =
+                    node "next" attributes [ text question.label ]
             in
             [ inputEle question
-            , node "next"
-                attributes
-                [ text question.label ]
+            , nextNode
             ]
 
         _ ->
@@ -200,8 +212,9 @@ inputEle question =
         [ css cssInputEle
         , type_ "text"
         , id <| String.fromInt question.id
-        , value ""
+        , value question.answer
         , placeholder question.text
+        , onInput <| SetAnswer question.id
         ]
         []
 
@@ -246,11 +259,19 @@ cssStartLink =
     ]
 
 
-cssNext : List Style
-cssNext =
+cssNext : Bool -> List Style
+cssNext show =
     [ fontSize (px 40)
     , margin2 (px 20) zero
     , cursor pointer
+    , property "opacity"
+        (if show then
+            "1"
+
+         else
+            "0"
+        )
+    , property "transition" "opacity .5s ease-in"
     ]
 
 

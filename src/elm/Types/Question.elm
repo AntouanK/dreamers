@@ -6,6 +6,7 @@ type alias Question =
     , text : String
     , withInput : Bool
     , label : String
+    , answer : String
     }
 
 

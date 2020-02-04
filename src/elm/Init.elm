@@ -29,20 +29,24 @@ initialQuestions =
       , text = "What do you want to do?"
       , withInput = True
       , label = "next"
+      , answer = ""
       }
     , { id = 2
       , text = "Where do you want to work?"
       , withInput = True
       , label = "next"
+      , answer = ""
       }
     , { id = 3
       , text = "How much revenue are you looking for?"
       , withInput = True
       , label = "next"
+      , answer = ""
       }
     , { id = 4
       , text = "email for the aptitude test"
       , withInput = True
       , label = "go"
+      , answer = ""
       }
     ]
