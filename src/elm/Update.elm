@@ -1,5 +1,6 @@
 module Update exposing (update)
 
+import API exposing (submitAnswers)
 import Time exposing (millisToPosix, posixToMillis)
 import Types.Model exposing (Model)
 import Types.Msg exposing (Msg(..))
@@ -33,8 +34,16 @@ update msg model =
 
                         _ ->
                             { model | route = route }
+
+                newCommand =
+                    case route of
+                        ChatSoon ->
+                            submitAnswers (newModel.questions |> List.map .answer)
+
+                        _ ->
+                            Cmd.none
             in
-            ( newModel, Cmd.none )
+            ( newModel, newCommand )
 
         UpdateTime posix ->
             let
@@ -60,3 +69,6 @@ update msg model =
                     { model | questions = newQuestions }
             in
             ( newModel, Cmd.none )
+
+        SubmittedAnswers _ ->
+            ( model, Cmd.none )

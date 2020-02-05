@@ -1,6 +1,7 @@
 module Types.Msg exposing (Msg(..))
 
 import Browser exposing (UrlRequest)
+import Http
 import Time exposing (Posix)
 import Types.Question exposing (QuestionId)
 import Types.Route exposing (Route)
@@ -14,3 +15,4 @@ type Msg
     | GoToRoute Route
     | UpdateTime Posix
     | SetAnswer QuestionId String
+    | SubmittedAnswers (Result Http.Error ())
