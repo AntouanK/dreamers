@@ -34,19 +34,19 @@ initialQuestions =
     , { id = 2
       , text = "Where do you want to work?"
       , withInput = True
-      , label = "next"
+      , label = "sounds good"
       , answer = ""
       }
     , { id = 3
       , text = "How much revenue are you looking for?"
       , withInput = True
-      , label = "next"
+      , label = "that will do"
       , answer = ""
       }
     , { id = 4
-      , text = "email for the aptitude test"
+      , text = "do you have an email address?"
       , withInput = True
-      , label = "go"
+      , label = "let's go"
       , answer = ""
       }
     ]

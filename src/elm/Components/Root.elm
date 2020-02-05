@@ -9,6 +9,7 @@ import Css
         , backgroundPosition
         , backgroundSize
         , borderBottom3
+        , borderRadius
         , borderStyle
         , center
         , color
@@ -17,7 +18,6 @@ import Css
         , cursor
         , display
         , displayFlex
-        , flex
         , flexDirection
         , fontFamilies
         , fontSize
@@ -29,6 +29,7 @@ import Css
         , int
         , justifyContent
         , margin2
+        , marginTop
         , minHeight
         , minWidth
         , none
@@ -40,6 +41,7 @@ import Css
         , pointer
         , property
         , px
+        , rem
         , solid
         , textAlign
         , transparent
@@ -51,7 +53,16 @@ import Css
         )
 import Html
 import Html.Styled exposing (Html, input, node, text, toUnstyled)
-import Html.Styled.Attributes exposing (css, disabled, id, placeholder, type_, value)
+import Html.Styled.Attributes
+    exposing
+        ( autofocus
+        , css
+        , disabled
+        , id
+        , placeholder
+        , type_
+        , value
+        )
 import Html.Styled.Events exposing (onClick, onInput)
 import Time exposing (posixToMillis)
 import Types.Model exposing (Model)
@@ -119,7 +130,7 @@ render model =
                                     diff // 60 // 60
                             in
                             [ node "timer-text"
-                                [ css [ fontSize (px 50), textAlign center ] ]
+                                [ css [ fontSize (rem 1.8), textAlign center ] ]
                                 [ text <|
                                     "Nice! We'll contact you before "
                                         ++ "this timer runs out"
@@ -199,7 +210,9 @@ renderQuestion questions questionId =
                         ++ extraAttributes
 
                 nextNode =
-                    node "next" attributes [ text question.label ]
+                    node ("next-for-questionid-" ++ String.fromInt question.id)
+                        attributes
+                        [ text question.label ]
             in
             [ inputEle question
             , node "input-ele-fake" [ css cssInputEleFake ] [ text question.text ]
@@ -219,6 +232,7 @@ inputEle question =
         , value question.answer
         , placeholder question.text
         , onInput <| SetAnswer question.id
+        , autofocus True
         ]
         []
 
@@ -248,18 +262,20 @@ cssInputEle : List Style
 cssInputEle =
     [ backgroundColor transparent
     , borderStyle none
-    , fontSize (px 50)
+    , fontSize (rem 1.2)
     , textAlign center
     , outline none
+    , property "outline-width" "0"
     , borderBottom3 (px 2) solid (hex "343434")
+    , borderRadius (px 0)
     , width (pct 100)
     ]
 
 
 cssInputEleFake : List Style
 cssInputEleFake =
-    [ fontSize (px 50)
-    , padding2 zero (px 10)
+    [ fontSize (rem 1.2)
+    , padding2 zero (px 20)
     , height zero
     , overflow hidden
     ]
@@ -267,15 +283,16 @@ cssInputEleFake =
 
 cssStartLink : List Style
 cssStartLink =
-    [ fontSize (px 70)
+    [ fontSize (rem 2)
     , cursor pointer
+    , padding (px 10)
     ]
 
 
 cssNext : Bool -> List Style
 cssNext show =
-    [ fontSize (px 40)
-    , margin2 (px 4) zero
+    [ fontSize (rem 1.2)
+    , marginTop (px 20)
     , cursor pointer
     , property "opacity"
         (if show then
@@ -290,7 +307,7 @@ cssNext show =
 
 cssTimeUnit : List Style
 cssTimeUnit =
-    [ fontSize (px 40)
+    [ fontSize (rem 1.2)
     , textAlign center
     , display inlineBlock
     , width (px 65)
@@ -305,7 +322,7 @@ cssCenterContent =
     , property "animation" "fadein 1s"
     , displayFlex
     , color <| hex "E95E35"
-    , padding (px 40)
+    , padding (px 20)
     , justifyContent center
     , backgroundColor <| hex "FDFDFD"
     , property "box-shadow" "5px 5px 1px #d36044"

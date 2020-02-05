@@ -14,6 +14,19 @@
         <link rel="preload" href="/images/8.jpg" as="image">
 
         <style>
+            @media all {
+                /* sets the base font size for all user agents that support media queries */
+                html {
+                    font-size: 16px;
+                }
+            }
+            @media screen and (min-width: 480px) {
+                /* sets a larger base font size for viewports with a minimum with of 480px, e.g. tablets, desktops, jumbotrons, etc. */
+                html {
+                    font-size: 24px;
+                }
+            }
+
             input::-webkit-input-placeholder { color: #E95E35; }
             input::-moz-placeholder { color: #E95E35; }
             input:-ms-input-placeholder { color: #E95E35; }
