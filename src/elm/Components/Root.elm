@@ -44,7 +44,9 @@ import Css
         , rem
         , solid
         , textAlign
+        , textDecoration
         , transparent
+        , underline
         , url
         , vh
         , vw
@@ -52,7 +54,7 @@ import Css
         , zero
         )
 import Html
-import Html.Styled exposing (Html, input, node, text, toUnstyled)
+import Html.Styled exposing (Html, div, input, node, text, toUnstyled)
 import Html.Styled.Attributes
     exposing
         ( autofocus
@@ -131,12 +133,15 @@ render model =
                             in
                             [ node "timer-text"
                                 [ css [ fontSize (rem 1.8), textAlign center ] ]
-                                [ text <|
-                                    "Nice! We'll contact you before "
-                                        ++ "this timer runs out"
+                                [ div
+                                    []
+                                    [ text "Nice!" ]
+                                , div
+                                    []
+                                    [ text "We'll contact you within the next 3 days " ]
                                 ]
                             , node "time-section"
-                                []
+                                [ css [ marginTop (px 20) ] ]
                                 [ node "time-unit"
                                     [ css cssTimeUnit ]
                                     [ text <| String.fromInt hours ]
@@ -294,6 +299,7 @@ cssNext show =
     [ fontSize (rem 1.2)
     , marginTop (px 20)
     , cursor pointer
+    , textDecoration underline
     , property "opacity"
         (if show then
             "1"
@@ -310,7 +316,7 @@ cssTimeUnit =
     [ fontSize (rem 1.2)
     , textAlign center
     , display inlineBlock
-    , width (px 65)
+    , width (px 50)
     ]
 
 

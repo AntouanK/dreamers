@@ -11,7 +11,7 @@ submitAnswers answers =
         body =
             stringBody
                 "application/json"
-                (Encode.encode 2 <| Encode.list Encode.string answers)
+                (Encode.encode 0 <| Encode.list Encode.string answers)
     in
     post
         { url = "http://78.46.198.28:3000/submit-answers"

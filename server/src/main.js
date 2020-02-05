@@ -1,9 +1,11 @@
 const fs = require("fs");
 const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
-const bodyParser = require("body-parser");
 
+app.use(cors());
 app.get("/", (req, res) => res.send("Hello World!"));
 app.post("/submit-answers", bodyParser.json(), (req, res) => {
   console.log(req.body);
