@@ -26,27 +26,27 @@ init flags _ _ =
 initialQuestions : List Question
 initialQuestions =
     [ { id = 1
-      , text = "What do you want to do?"
+      , text = "What do you dream to sell?"
       , withInput = True
-      , label = "next"
+      , label = "Steady your aim!"
       , answer = ""
       }
     , { id = 2
-      , text = "Where do you want to work?"
+      , text = "What area do you dream to work in?"
       , withInput = True
-      , label = "sounds good"
+      , label = "Position ready!"
       , answer = ""
       }
     , { id = 3
-      , text = "How much revenue are you looking for?"
+      , text = "How much revenue will you make?"
       , withInput = True
-      , label = "that will do"
+      , label = "Feelin' good!"
       , answer = ""
       }
     , { id = 4
-      , text = "do you have an email address?"
+      , text = "What's your email address?"
       , withInput = True
-      , label = "let's go"
+      , label = "Slam it!"
       , answer = ""
       }
     ]

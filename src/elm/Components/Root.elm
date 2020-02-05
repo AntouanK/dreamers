@@ -135,10 +135,10 @@ render model =
                                 [ css [ fontSize (rem 1.8), textAlign center ] ]
                                 [ div
                                     []
-                                    [ text "Nice!" ]
+                                    [ text "SLAMDUNK" ]
                                 , div
                                     []
-                                    [ text "We'll contact you within the next 3 days " ]
+                                    [ text "We'll contact you in 3 days. \u{1F919}" ]
                                 ]
                             , node "time-section"
                                 [ css [ marginTop (px 20) ] ]
