@@ -299,12 +299,12 @@ cssTimeUnit =
 
 cssCenterContent : List Style
 cssCenterContent =
-    [ flex (int 0)
+    [ property "flex" "0 0 auto"
     , flexDirection column
     , alignItems center
     , property "animation" "fadein 1s"
     , displayFlex
-    , color <| hex "d36044"
+    , color <| hex "E95E35"
     , padding (px 40)
     , justifyContent center
     , backgroundColor <| hex "FDFDFD"
