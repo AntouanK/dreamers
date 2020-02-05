@@ -8,6 +8,6 @@ import Types.Msg exposing (Msg)
 
 view : Model -> Document Msg
 view model =
-    { title = "title"
+    { title = "SlamDunk"
     , body = [ C_Root.render model ]
     }
